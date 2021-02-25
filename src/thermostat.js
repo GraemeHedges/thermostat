@@ -9,6 +9,8 @@ class Thermostat {
     this.DEFAULT_TEMPERATURE = 20;
     this.MAX_LIMIT_POWER_SAVE_ON = 25;
     this.MAX_LIMIT_POWER_SAVE_OFF = 32;
+    this.LOWER_LIMIT = 18;
+    this.HIGH_LIMIT = 25;
   };
   
   temperature() {
@@ -16,31 +18,42 @@ class Thermostat {
   };
 
   up() {
-    if (this.temp === this.maximumTemperature) {
+    if (this._isMaxTemp()) {
       return;
-    } else {
-    this.temp += 1;
     }
+    this.temp += 1;
+  }
+
+  _isMaxTemp() {
+    if (this.isPowerSaveOn() === false) {
+      return this.temp === this.MAX_LIMIT_POWER_SAVE_OFF;
+    }
+    return this.temp === this.MAX_LIMIT_POWER_SAVE_ON;
   }
 
   down() {
-    if (this.temp === this.MINIMUM_TEMPERATURE) {
+    if (this._isMinTemp()) {
       return;
-    } else {
+    }
     this.temp -= 1;
-    }
-  };
+  }
 
-  powerSave() {
-    if (this.powerSavingMode === true) {
-      this.powerSavingMode = false;
-      this.maximumTemperature = 32;
-      console.log("Power Saving mode off") 
-    } else {
-      this.powerSavingMode = true;
-      this.maximumTemperature = 25;
-      console.log("Power Saving mode on") 
-    }
+  _isMinTemp() {
+    return this.temp === this.MINIMUM_TEMPERATURE;
+  }
+
+  powerSaveOff() {
+    this.powerSavingMode = false;
+    this.maximumTemperature = this.MAX_LIMIT_POWER_SAVE_OFF;
+  }
+
+  powerSaveOn() {
+    this.powerSavingMode = true;
+    this.maximumTemperature = this.MAX_LIMIT_POWER_SAVE_ON;
+  }
+
+  isPowerSaveOn() {
+    return this.powerSavingMode === true;
   }
 
   reset() {
@@ -48,12 +61,11 @@ class Thermostat {
   }
 
   energyUsage() {
-    if (this.temp < 18) {
+    if (this.temp < this.LOWER_LIMIT) {
       return 'low-usage';
-    } else if (this.temp <= 25) {
+    } else if (this.temp <= this.HIGH_LIMIT) {
       return 'medium-usage';
-    } else {
-      return 'high-usage';
     }
+      return 'high-usage';
   }
 };
