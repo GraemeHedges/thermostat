@@ -13,7 +13,11 @@ class Thermostat {
   };
 
   up() {
+    if (this.temp === this.maximumTemperature) {
+      return;
+    } else {
     this.temp += 1;
+    }
   }
 
   down() {
