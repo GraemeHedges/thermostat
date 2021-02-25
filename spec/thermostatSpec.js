@@ -41,13 +41,13 @@ describe('Thermostat', function() {
     });
 
     it('A new thermostat has a maximum temperature of 25', function() {
-      expect(thermostat.maximumTemperature).toEqual(25);
+      expect(thermostat.maximumTemperature).toEqual(thermostat.MAX_LIMIT_POWER_SAVE_ON);
     });
 
     it('Power Saving Mode can be toggled off and maximum temp to be 32', function(){
       thermostat.powerSave();
       expect(thermostat.powerSavingMode).toEqual(false);
-      expect(thermostat.maximumTemperature).toEqual(32);
+      expect(thermostat.maximumTemperature).toEqual(thermostat.MAX_LIMIT_POWER_SAVE_OFF);
     });
 
     it('Cannot increase temp beyond the maximum', function(){
@@ -59,10 +59,10 @@ describe('Thermostat', function() {
     it('Power Saving Mode can be toggled on and maximum temp to be 25', function(){
       thermostat.powerSave();
       expect(thermostat.powerSavingMode).toEqual(false);
-      expect(thermostat.maximumTemperature).toEqual(32);
+      expect(thermostat.maximumTemperature).toEqual(thermostat.MAX_LIMIT_POWER_SAVE_OFF);
       thermostat.powerSave();
       expect(thermostat.powerSavingMode).toEqual(true);
-      expect(thermostat.maximumTemperature).toEqual(25);    
+      expect(thermostat.maximumTemperature).toEqual(thermostat.MAX_LIMIT_POWER_SAVE_ON);    
     });
   });
 
@@ -70,7 +70,7 @@ describe('Thermostat', function() {
     it('Resets the temperature to 20', function(){
       thermostat = new Thermostat(25);
       thermostat.reset();
-      expect(thermostat.temp).toEqual(20);
+      expect(thermostat.temp).toEqual(thermostat.DEFAULT_TEMPERATURE);
     });
   });
 
