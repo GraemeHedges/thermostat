@@ -26,6 +26,13 @@ describe('Thermostat', function() {
       thermostat.down();
       expect(thermostat.temperature()).toEqual(19);
     })
-  }) 
+
+    it('cannot decrease the temperature below 10', function(){
+      thermostat = new Thermostat(thermostat.MINIMUM_TEMPERATURE);
+      expect(thermostat.temperature()).toEqual(thermostat.MINIMUM_TEMPERATURE);
+      thermostat.down()
+      expect(thermostat.temperature()).toEqual(thermostat.MINIMUM_TEMPERATURE);
+    }); 
+  });
 });
   
